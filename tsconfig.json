@@ -3,9 +3,10 @@
     "target": "es2017",
     "module": "commonjs",
     "noUnusedParameters": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "sourceMap": true,
+    "strict": false,
   },
   "exclude": [
     "node_modules"
