@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "tslint-config-standard",
+  ],
+  "rules": {
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "space-before-function-paren": true,
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules"
+    ]
+  }
+}
