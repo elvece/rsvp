@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "elvece",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^11.11.3",
+    "@types/node": "^11.13.7",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "typeorm": "^0.2.15"
-  }
+    "morgan": "^1.9.1",
+    "pg": "^7.10.0",
+    "typeorm": "^0.2.16"
+  },
+  "devDependencies": {}
 }

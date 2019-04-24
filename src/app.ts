@@ -1,5 +1,6 @@
 import * as express from 'express'
 import * as cors from 'cors'
+import * as morgan from 'morgan'
 import * as bp from 'body-parser'
 import { getManager } from 'typeorm'
 import { Rsvp } from './model'
@@ -12,7 +13,8 @@ app.use(bp.json({ type: 'application/json' }))
 app.use(bp.urlencoded({ type: 'application/x-www-form-urlencoded', extended: false }))
 app.use(cors())
 
-app.use('/register', async (req, res, next) => {
+app.post('/rsvp/register', async (req, res, next) => {
+  // todo validate
   const data = req.body as RegisterRequest
   try {
     const rsvp = await getManager().create(Rsvp, { ...data })
@@ -20,6 +22,19 @@ app.use('/register', async (req, res, next) => {
   } catch (e) {
     res.status(500).json(e)
   }
+  next()
+})
+
+app.get('/rsvp/all', async (req, res, next) => {
+  // todo auth me
+  const data = req.body as RegisterRequest
+  try {
+    const all = await getManager().find(Rsvp)
+    res.status(200).json(all)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+  next()
 })
 
 export default app

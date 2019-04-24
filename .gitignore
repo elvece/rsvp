@@ -2,3 +2,5 @@ node_modules/*
 notes.md
 *.js.map
 *.js
+config.*
+ormconfig.json
