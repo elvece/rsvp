@@ -4,18 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "elvece",
   "license": "ISC",
   "dependencies": {
+    "@types/ajv": "^1.0.0",
     "@types/node": "^11.13.7",
+    "ajv": "^6.10.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "express-session": "^1.16.1",
     "morgan": "^1.9.1",
     "pg": "^7.10.0",
     "typeorm": "^0.2.16"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  }
 }
