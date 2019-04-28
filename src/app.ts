@@ -1,14 +1,18 @@
+import 'reflect-metadata'
 import * as express from 'express'
 import * as cors from 'cors'
 import * as morgan from 'morgan'
 import * as bp from 'body-parser'
-import { getManager } from 'typeorm'
-import { Rsvp } from './model'
-
+import * as bcrypt from 'bcrypt'
+import * as R from 'ramda'
+import * as session from 'express-session'
 import * as Ajv from 'ajv'
-var ajv = new Ajv({ allErrors: true })
+import { getManager } from 'typeorm'
+import { config } from '../config'
+import { User, Rsvp } from './models'
+const ajv = new Ajv({ allErrors: true })
 
-var schema = {
+const register = {
   type: 'object',
   properties: {
     firstName: { type: 'string', pattern: '^(?!.*\\d)', minLength: 2, maxLength: 120 },
@@ -17,15 +21,34 @@ var schema = {
   }
 }
 
+const login = {
+  type: 'object',
+  properties: {
+    userName: { type: 'string', pattern: '^(?!.*\\d)', minLength: 2, maxLength: 120 },
+    password: { type: 'string', pattern: '', minLength: 8, maxLength: 30 }
+  }
+}
+
 const app: express.Application = express()
-const router: express.Router = express.Router()
 
 app.use(morgan('dev'))
 app.use(bp.json({ type: 'application/json' }))
 app.use(bp.urlencoded({ type: 'application/x-www-form-urlencoded', extended: false }))
 app.use(cors())
 
-app.post('/rsvp/register', validate(ajv.compile(schema)), async (req, res, next) => {
+// session middleware
+app.set('trust proxy', 1)
+app.use(session({
+  secret: config.session.secret,  
+  resave: false,
+  saveUninitialized: false,
+  store: new (require('connect-pg-simple')(session))({
+    conString: 'pg://' + config.database.username + ':' + config.database.password + '@' + config.database.host + '/' + config.database.database
+  }),
+  cookie: { maxAge: 60 * 60 * 1000, secure: true }
+}))
+
+app.post('/rsvp/register', validate(ajv.compile(register)), async (req, res, next) => {
   const data = req.body as RegisterRequest
   try {
     const rsvp = await getManager().save(Rsvp, { ...data })
@@ -37,13 +60,40 @@ app.post('/rsvp/register', validate(ajv.compile(schema)), async (req, res, next)
 })
 
 app.get('/rsvp/all', async (req, res, next) => {
-  // todo auth me
-  try {
-    const all = await getManager().find(Rsvp)
-    res.status(200).json(all)
-  } catch (e) {
-    res.status(500).json(e)
+  if (!req.session.user) {
+    res.status(401).json('Action requires authentication.')
+  } else {
+    try {
+      const all = await getManager().find(Rsvp)
+      res.status(200).json(all)
+    } catch (e) {
+      res.status(500).json(e)
+    }
+    next()
   }
+})
+
+app.post('/admin/register', validate(ajv.compile(login)), async (req, res, next) => {
+  const { userName, password } = req.body
+  bcrypt.hash(password, 10, async (err, hash) => {
+    if (err) next(err)
+    try {
+      const newUser = await getManager().save(User, { userName, password: hash, admin: true })
+      res.status(200).json(R.omit(['password', 'createdAt', 'updatedAt'], newUser))
+    } catch (e) {
+      next(e)
+    }
+  })
+})
+
+app.post('/admin/login', async (req, res, next) => {
+  const { userName, password } = req.body
+  const user = await getManager().findOne(User, { userName })
+  if (!user) res.status(401).json('User not found.')
+  const match = bcrypt.compare(password, user.password)
+  if (!match) res.status(401).json('Invalid password')
+  req.session.user = user
+  res.status(200).json('Successfully logged in.')
   next()
 })
 
@@ -69,5 +119,5 @@ export function validate(validator: Ajv.ValidateFunction) {
 
 // catch all error handling
 app.use(function (err, req, res, next) {
-  res.status(500).send(err)
+  res.status(500).json(err)
 })

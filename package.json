@@ -11,13 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "@types/ajv": "^1.0.0",
-    "@types/node": "^11.13.7",
+    "@types/node": "^11.13.8",
+    "@types/ramda": "^0.26.8",
     "ajv": "^6.10.0",
+    "bcrypt": "^3.0.6",
+    "connect-pg-simple": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "morgan": "^1.9.1",
     "pg": "^7.10.0",
+    "ramda": "^0.26.1",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.16"
   },
   "devDependencies": {
