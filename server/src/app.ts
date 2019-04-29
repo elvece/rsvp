@@ -92,7 +92,8 @@ app.post('/admin/login', async (req, res, next) => {
   if (!user) res.status(401).json('User not found.')
   const match = bcrypt.compare(password, user.password)
   if (!match) res.status(401).json('Invalid password')
-  req.session.user = user
+  req.session.user = user.id
+  console.log(req.session)
   res.status(200).json('Successfully logged in.')
   next()
 })
@@ -108,7 +109,7 @@ interface RegisterRequest {
 
 
 export function validate(validator: Ajv.ValidateFunction) {
-  return function (req, res, next) {
+  return function (req, _, next) {
     if (validator(req.body) !== true) {
       next(JSON.stringify(validator.errors))
     } else {
@@ -118,6 +119,6 @@ export function validate(validator: Ajv.ValidateFunction) {
 }
 
 // catch all error handling
-app.use(function (err, req, res, next) {
+app.use(function (err, _, res, _) {
   res.status(500).json(err)
 })
