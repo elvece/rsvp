@@ -26,3 +26,5 @@ export class Rsvp {
   @Column('boolean', { name: 'reply' })
   reply: boolean
 }
+
+// TODO add note as field
