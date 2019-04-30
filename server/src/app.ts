@@ -54,7 +54,7 @@ app.post('/rsvp/register', validate(ajv.compile(register)), async (req, res, nex
     const rsvp = await getManager().save(Rsvp, { ...data })
     res.status(200).json(rsvp)
   } catch (e) {
-    res.status(500).json(e)
+    next(e)
   }
   next()
 })
@@ -67,7 +67,7 @@ app.get('/rsvp/all', async (req, res, next) => {
       const all = await getManager().find(Rsvp)
       res.status(200).json(all)
     } catch (e) {
-      res.status(500).json(e)
+      next(e)
     }
     next()
   }
@@ -119,6 +119,6 @@ export function validate(validator: Ajv.ValidateFunction) {
 }
 
 // catch all error handling
-app.use(function (err, _, res, _) {
+app.use((err, req, res, next) => {
   res.status(500).json(err)
 })

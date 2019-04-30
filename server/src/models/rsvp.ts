@@ -28,3 +28,4 @@ export class Rsvp {
 }
 
 // TODO add note as field
+// uniqueness constraint on email
