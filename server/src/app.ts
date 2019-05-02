@@ -17,7 +17,8 @@ const register = {
   properties: {
     firstName: { type: 'string', pattern: '^(?!.*\\d)', minLength: 2, maxLength: 120 },
     lastName: { type: 'string', pattern: '^(?!.*\\d)', minLength: 2, maxLength: 120 },
-    email: { type: 'string', format: 'email', maxLength: 128 }
+    email: { type: 'string', format: 'email', maxLength: 128 },
+    reply: { type: 'string' }
   }
 }
 

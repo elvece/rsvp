@@ -20,12 +20,15 @@ export class Rsvp {
   @Column('text', { name: 'last_name' })
   lastName: string
 
-  @Column('text', { name: 'email' })
+  @Column('text', { name: 'email', unique: true })
   email: string
+
+  @Column('text', { name: 'phone' })
+  phone: string
 
   @Column('boolean', { name: 'reply' })
   reply: boolean
-}
 
-// TODO add note as field
-// uniqueness constraint on email
+  @Column('text', { name: 'notes' })
+  notes: string
+}

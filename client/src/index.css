@@ -1,0 +1,60 @@
+@font-face {
+  font-family: 'Europa';
+  src: url('./app/assets/fonts/europabold-webfont.woff2') format('woff2'),
+    url('./app/assets/fonts/europabold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Europa';
+  src: url('./app/assets/fonts/europabolditalic-webfont.woff2') format('woff2'),
+    url('./app/assets/fonts/europabolditalic-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Europa';
+  src: url('./app/assets/fonts/europalight-webfont.woff2') format('woff2'),
+    url('./app/assets/fonts/europalight-webfont.woff') format('woff');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Europa';
+  src: url('./app/assets/fonts/europalightitalic-webfont.woff2') format('woff2'),
+    url('./app/assets/fonts/europalightitalic-webfont.woff') format('woff');
+  font-weight: lighter;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Europa';
+  src: url('./app/assets/fonts/europaregular-webfont.woff2') format('woff2'),
+    url('./app/assets/fonts/europaregular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Europa';
+  src: url('./app/assets/fonts/europaregularitalic-webfont.woff2') format('woff2'),
+    url('./app/assets/fonts/europaregularitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  background-image: url('./app/assets/flwrs.jpeg');
+  font-family: 'Europa', sans-serif;
+  font-weight: lighter;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

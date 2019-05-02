@@ -6,6 +6,7 @@ import { create } from 'jss'
 import { createGenerateClassName, jssPreset, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter } from 'react-router-dom'
 import JssProvider from 'react-jss/lib/JssProvider'
+import './index.css'
 
 const generateClassName = createGenerateClassName()
 const jss = create({
@@ -18,10 +19,10 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: '#05868e'
+      main: '#be2929'
     },
     secondary: {
-      main: '#334760'
+      main: '#da4545'
     }
   }
 })
