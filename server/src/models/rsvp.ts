@@ -29,6 +29,6 @@ export class Rsvp {
   @Column('boolean', { name: 'reply' })
   reply: boolean
 
-  @Column('text', { name: 'notes' })
-  notes: string
+  @Column('text', { name: 'note', nullable: true })
+  note: string
 }

@@ -12,8 +12,7 @@ export class WebService {
   }
 
   createRsvp = async (body: CreateRsvpRequest) => {
-    const res = await this.requests.post('/rsvp/register', { ...body })
-    return { ...res }
+    return this.requests.post('/rsvp/register', { ...body })
   }
 }
 

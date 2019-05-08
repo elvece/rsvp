@@ -18,7 +18,8 @@ const register = {
     firstName: { type: 'string', pattern: '^(?!.*\\d)', minLength: 2, maxLength: 120 },
     lastName: { type: 'string', pattern: '^(?!.*\\d)', minLength: 2, maxLength: 120 },
     email: { type: 'string', format: 'email', maxLength: 128 },
-    reply: { type: 'string' }
+    reply: { type: 'string' },
+    note: { type: 'string', pattern: '^(?!.*\\d)', maxLength: 240 }
   }
 }
 
@@ -52,9 +53,15 @@ app.use(session({
 app.post('/rsvp/register', validate(ajv.compile(register)), async (req, res, next) => {
   const data = req.body as RegisterRequest
   try {
-    const rsvp = await getManager().save(Rsvp, { ...data })
-    res.status(200).json(rsvp)
+    const emailExists = await getManager().findOne(Rsvp, { email: data.email })
+    if (emailExists) {
+      res.status(406).json('This email has already been registered. Please try another.')
+    } else {
+      const rsvp = await getManager().save(Rsvp, { ...data })
+      res.status(200).json(rsvp)      
+    }
   } catch (e) {
+    console.error(`Error registering: ${e}`)
     next(e)
   }
   next()

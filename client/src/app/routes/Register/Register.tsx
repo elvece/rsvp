@@ -4,11 +4,16 @@ import { withFormik } from 'formik'
 import { WebService } from 'app/services/WebService'
 import './Register.css'
 import * as Yup from 'yup'
+import { Prompt } from 'react-router-dom'
 
 const webService = new WebService('http://localhost:3333')
 
-const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, touched, errors, handleReset }) => (
+const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, touched, errors, dirty }) => (
   <React.Fragment>
+    <Prompt
+      when={dirty}
+      message={`Your changes are unsaved. Are you sure you want to leave this page?`}
+    />
     <div className="register-wrapper">
       <Paper className="register-box">
         <h1 className="register-header">Welcome!</h1>
@@ -93,6 +98,22 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
                 : null
             }
           </div>
+          <p>Feel free to enter a short note with your registration:</p>
+          <TextField
+            label="Note"
+            error={touched.note && !!errors.note}
+            type="text"
+            name="note"
+            value={values.note}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          {
+            touched.note && errors.note
+              ? <div>{errors.note}</div>
+              : null
+          }
           <Button
             variant="contained"
             color="primary"
@@ -110,12 +131,14 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
 )
 
 const formikConfig = {
+  validateOnChange: false,
   mapPropsToValues: props => ({
     email: '',
     phone: '',
     firstName: '',
     lastName: '',
-    reply: ''
+    reply: '',
+    note: ''
   }),
   validationSchema:
     Yup.object().shape({
@@ -134,16 +157,21 @@ const formikConfig = {
         .max(30, 'Last name cannot be more than 30 characters.')
         .required('Last name required'),
       reply: Yup.boolean()
-        .required('RSVP reply required.')
+        .required('RSVP reply required.'),
+      note: Yup.string()
+        .max(240)
     }),
-  handleSubmit: async (values, { setSubmitting, setStatus, setErrors, props }) => {
-    try {
+  handleSubmit: async (values, { setSubmitting, setStatus, setFieldValue, resetForm, setErrors, props }) => {
       await webService.createRsvp(values)
-      setStatus('Registration complete. Thank you!')
-    } catch (e) {
-      setErrors(e)
-      setStatus(e.message)
-    }
+        .then(res => { 
+          setStatus('Registration complete. Thank you!')
+          for (let v in values) {
+            setFieldValue(v, '')
+          }
+        })
+        .catch(e => {
+          setStatus(e.response.data)
+        })
     setSubmitting(false)
   }
 }
