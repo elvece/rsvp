@@ -16,8 +16,8 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
     />
     <div className="register-wrapper">
       <Paper className="register-box">
-        <h1 className="register-header">Welcome!</h1>
-        <h3>Please register for Nicole's Bridal Shower below. We hope to see you there to create a memorable surprise for her!</h3>
+        <h1 className="register-header">welcome</h1>
+        <h3 className="register-text">Please register for Nicole's bridal shower below. We hope to see you there to create a memorable surprise for her!</h3>
         <form onSubmit={handleSubmit} noValidate>
           <TextField
             label="First Name"
@@ -79,6 +79,21 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
               ? <div>{errors.phone}</div>
               : null
           }
+          <TextField
+            label="Enter a short note if desired..."
+            error={touched.note && !!errors.note}
+            type="text"
+            name="note"
+            value={values.note}
+            onChange={handleChange}
+            fullWidth
+            margin="normal"
+          />
+          {
+            touched.note && errors.note
+              ? <div>{errors.note}</div>
+              : null
+          }
           <div className="register-rsvp-box">
             <FormControl component="div">
               <FormLabel component="label" error={touched.reply && !!errors.reply}>RSVP</FormLabel>
@@ -98,22 +113,6 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
                 : null
             }
           </div>
-          <p>Feel free to enter a short note with your registration:</p>
-          <TextField
-            label="Note"
-            error={touched.note && !!errors.note}
-            type="text"
-            name="note"
-            value={values.note}
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-          />
-          {
-            touched.note && errors.note
-              ? <div>{errors.note}</div>
-              : null
-          }
           <Button
             variant="contained"
             color="primary"
@@ -146,18 +145,18 @@ const formikConfig = {
         .email()
         .required('Email address required'),
       phone: Yup.string()
-        .max(15, 'Phone Number must not be more than 15 characters.')
+        .max(15, 'Phone Number must not be more than 15 characters')
         .required('Phone number required'),
       firstName: Yup.string()
-        .min(2, 'First name has to be at least 2 characters.')
-        .max(30, 'Last name cannot be more than 30 characters.')
+        .min(2, 'First name has to be at least 2 characters')
+        .max(30, 'Last name cannot be more than 30 characters')
         .required('First name required'),
       lastName: Yup.string()
         .min(2, 'Last name has to be at least 2 characters.')
-        .max(30, 'Last name cannot be more than 30 characters.')
+        .max(30, 'Last name cannot be more than 30 characters')
         .required('Last name required'),
       reply: Yup.boolean()
-        .required('RSVP reply required.'),
+        .required('RSVP reply required'),
       note: Yup.string()
         .max(240)
     }),
