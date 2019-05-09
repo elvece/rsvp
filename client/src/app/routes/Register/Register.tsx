@@ -17,7 +17,7 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
     <div className="register-wrapper">
       <Paper className="register-box">
         <h1 className="register-header">welcome</h1>
-        <h3 className="register-text">Please register for Nicole's bridal shower below. We hope to see you there to create a memorable surprise for her!</h3>
+        <h3 className="register-text">Please register for Nicole's bridal shower below. <br/> We hope to see you there to create a memorable surprise for her!</h3>
         <form onSubmit={handleSubmit} noValidate>
           <TextField
             label="First Name"
