@@ -9,20 +9,21 @@ export function pgConfig() {
     if (!c.config) throw new Error('config file required in development mode')
     return c.config.database
   } else {
-    // const databaseUrl: string = process.env.DATABASE_URL
-    // const connOpts = pgParser.parse(databaseUrl)
+    const databaseUrl: string = process.env.DATABASE_URL
+    const connOpts = pgParser.parse(databaseUrl)
     const typeOrmOptions: PostgresConnectionOptions = {
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: connOpts.host,
+      port: connOpts.port,
+      username: connOpts.username,
+      password: connOpts.password,
+      database: connOpts.database,
       entities: ['./src/models/index.js'],
       migrations: ['./migrations/*.js'],
       migrationsTableName: 'db_migrations',
       migrationsRun: false,
-      logging: false
+      logging: false,
+      ssl: true
     }
     const ormConfigExtra = {
       cli: {
@@ -33,14 +34,14 @@ export function pgConfig() {
       },
       logging: true
     }
-    genOrmConfigJson(R.merge(R.omit(['migrationsTableName', 'migrationsRun'], typeOrmOptions), ormConfigExtra))
+    genOrmConfigJson(R.merge(R.omit(['migrationsRun'], typeOrmOptions), ormConfigExtra))
     return typeOrmOptions
   }
 }
 
 export function getStoreConnString() {
   const config = pgConfig()
-  return process.env.NODE_ENV === 'development' ? 'pg://' + config.username + ':' + config.password + '@' + config.host + '/' + config.database : process.env.DATABASE_URL
+  return process.env.NODE_ENV === 'development' ? 'postgres://' + config.username + ':' + config.password + '@' + config.host + '/' + config.database : process.env.DATABASE_URL
 }
 
 function genOrmConfigJson(opts: PostgresConnectionOptions) {
