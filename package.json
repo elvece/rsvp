@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "cd src & tsc && node index.js",
     "dev": "NODE_ENV=development nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd src & tsc && cd ../client && npm i && npm run build"
+    "heroku-postbuild": "cd client && npm i && npm run build"
   },
   "author": "elvece",
   "license": "ISC",
