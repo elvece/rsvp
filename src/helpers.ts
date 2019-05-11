@@ -9,15 +9,15 @@ export function pgConfig() {
     if (!c.config) throw new Error('config file required in development mode')
     return c.config.database
   } else {
-    const databaseUrl: string = process.env.DATABASE_URL
-    const connOpts = pgParser.parse(databaseUrl)
+    // const databaseUrl: string = process.env.DATABASE_URL
+    // const connOpts = pgParser.parse(databaseUrl)
     const typeOrmOptions: PostgresConnectionOptions = {
       type: 'postgres',
-      host: connOpts.host,
-      port: connOpts.port || 5432,
-      username: connOpts.username,
-      password: connOpts.password,
-      database: connOpts.database,
+      host: process.env.DB_HOST,
+      port: Number(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
       entities: ['./src/models/index.js'],
       migrations: ['./migrations/*.js'],
       migrationsTableName: 'db_migrations',

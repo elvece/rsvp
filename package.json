@@ -7,7 +7,7 @@
     "start": "node ./src/index.js",
     "dev": "NODE_ENV=development nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "tsc & cd client/ && npm i && npm run build"
+    "heroku-postbuild": "tsc && typeorm migration:run cd client/ && npm i && npm run build"
   },
   "author": "elvece",
   "license": "ISC",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "typeorm": "^0.2.17"
   }
 }
