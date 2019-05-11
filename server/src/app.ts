@@ -10,6 +10,8 @@ import * as Ajv from 'ajv'
 import { getManager } from 'typeorm'
 import { config } from '../config'
 import { User, Rsvp } from './models'
+import { getStoreConnString } from './helpers'
+import * as path from 'path'
 const ajv = new Ajv({ allErrors: true })
 
 const register = {
@@ -41,14 +43,18 @@ app.use(cors())
 // session middleware
 app.set('trust proxy', 1)
 app.use(session({
-  secret: config.session.secret,  
+  secret: process.env.SESSION_SECRET ? process.env.SESSION_SECRET : config.session.secret,  
   resave: false,
   saveUninitialized: false,
   store: new (require('connect-pg-simple')(session))({
-    conString: 'pg://' + config.database.username + ':' + config.database.password + '@' + config.database.host + '/' + config.database.database
+    conString: getStoreConnString()
   }),
   cookie: { maxAge: 60 * 60 * 1000, secure: true }
 }))
+
+if (process.env.NODE_ENV === 'production') {
+app.use(express.static(path.join(__dirname, '../../client/build')))
+}
 
 app.post('/rsvp/register', validate(ajv.compile(register)), async (req, res, next) => {
   const data = req.body as RegisterRequest
@@ -101,7 +107,6 @@ app.post('/admin/login', async (req, res, next) => {
   const match = bcrypt.compare(password, user.password)
   if (!match) res.status(401).json('Invalid password')
   req.session.user = user.id
-  console.log(req.session)
   res.status(200).json('Successfully logged in.')
   next()
 })

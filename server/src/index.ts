@@ -1,11 +1,11 @@
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
 import app from './app'
-import { config } from '../config'
+import { pgConfig } from './helpers'
 
 const PORT = process.env.PORT || 3333
 
-createConnection(config.database)
+createConnection(pgConfig())
   .then(() => {
     app.listen(PORT, () => {
       console.log(`app listening on port ${PORT}`)

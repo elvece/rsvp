@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from 'axios'
 export class WebService {
   requests: AxiosInstance
 
-  constructor(baseURL: string) {
+  constructor(baseURL: string = '') {
     this.requests = axios.create({
       baseURL,
       headers: { 'Content-Type': 'application/json' },
