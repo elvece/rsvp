@@ -35,7 +35,6 @@ export function pgConfig() {
       logging: true
     }
     genOrmConfigJson(R.merge(R.omit(['migrationsRun'], typeOrmOptions), ormConfigExtra))
-    console.log(typeOrmOptions)
     return typeOrmOptions
   }
 }

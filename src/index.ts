@@ -6,7 +6,8 @@ import { pgConfig } from './helpers'
 const PORT = process.env.PORT || 3333
 
 createConnection(pgConfig())
-  .then(() => {
+  .then(async connection => {
+    await connection.runMigrations()
     app.listen(PORT, () => {
       console.log(`app listening on port ${PORT}`)
     })
