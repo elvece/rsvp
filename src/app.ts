@@ -8,7 +8,6 @@ import * as R from 'ramda'
 import * as session from 'express-session'
 import * as Ajv from 'ajv'
 import { getManager } from 'typeorm'
-import { config } from '../config'
 import { User, Rsvp } from './models'
 import { getStoreConnString } from './helpers'
 import * as path from 'path'
@@ -43,7 +42,7 @@ app.use(cors())
 // session middleware
 app.set('trust proxy', 1)
 app.use(session({
-  secret: process.env.SESSION_SECRET ? process.env.SESSION_SECRET : config.session.secret,  
+  secret: process.env.SESSION_SECRET ? process.env.SESSION_SECRET : require('../config').config.session.secret,  
   resave: false,
   saveUninitialized: false,
   store: new (require('connect-pg-simple')(session))({
