@@ -15,7 +15,7 @@ export function pgConfig() {
       type: 'postgres',
       host: connOpts.host,
       port: connOpts.port,
-      username: connOpts.username,
+      username: connOpts.user,
       password: connOpts.password,
       database: connOpts.database,
       entities: ['./src/models/index.js'],
