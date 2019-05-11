@@ -55,7 +55,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.static(path.join(__dirname, '../client/build')))
 }
 
-app.post('/rsvp/register', validate(ajv.compile(register)), async (req, res, next) => {
+app.post('/rsvp/register', validate(ajv.compile(register)), async function (req, res, next) {
   const data = req.body as RegisterRequest
   try {
     const emailExists = await getManager().findOne(Rsvp, { email: data.email })
@@ -72,7 +72,7 @@ app.post('/rsvp/register', validate(ajv.compile(register)), async (req, res, nex
   next()
 })
 
-app.get('/rsvp/all', async (req, res, next) => {
+app.get('/rsvp/all', async function (req, res, next) {
   if (!req.session.user) {
     res.status(401).json('Action requires authentication.')
   } else {
@@ -86,7 +86,7 @@ app.get('/rsvp/all', async (req, res, next) => {
   }
 })
 
-app.post('/admin/register', validate(ajv.compile(login)), async (req, res, next) => {
+app.post('/admin/register', validate(ajv.compile(login)), async function (req, res, next) {
   const { userName, password } = req.body
   bcrypt.hash(password, 10, async (err, hash) => {
     if (err) next(err)
@@ -99,7 +99,7 @@ app.post('/admin/register', validate(ajv.compile(login)), async (req, res, next)
   })
 })
 
-app.post('/admin/login', async (req, res, next) => {
+app.post('/admin/login', async function (req, res, next) {
   const { userName, password } = req.body
   const user = await getManager().findOne(User, { userName })
   if (!user) res.status(401).json('User not found.')
