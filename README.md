@@ -1,8 +1,8 @@
-# rsvp
+# [rsvp](http://www.nicolesbridalrsvp.com/)
 
 generic form submission with validation template tailored for my sister's bridal shower
 
-[check it](http://www.nicolesbridalrsvp.com/)
+admittedly basic structural setup to start
 
 Technologies Utilized:
 - ReactJS
@@ -12,15 +12,25 @@ Technologies Utilized:
 - PostgresSQL
 - Heroku
 
-Client startup (no setup required):
-`cd client`
-`npm i`
-`npm start`
+### Client setup:
+```
+    cd client
+    npm i
+    npm start
+```
 
-Server setup:
-`npm i`
-cp `./config-defaults.ts` `./config.ts`
-`psql CREATE DATABASE rsvp;`
-install typeorm-cli globally `npm install -g ts-node`
-typeorm migrations:run
-`npm run dev`
+### Server setup:
+`npm i`  
+` cp ./config-defaults.ts ./config.ts`  
+`psql CREATE DATABASE rsvp;`  
+install [typeorm-cli](https://github.com/typeorm/typeorm/blob/master/docs/using-cli.md) globally: `npm install -g ts-node`  
+to initalize db: `typeorm migrations:run`  
+compile typescript: `tsc`  
+to start server: `npm run dev`
+
+### TODO:
+- separate areas of concern into files (ie. validation, types, routes)
+- implement registration form and routing on FE
+- config on FE for web service base url
+- env var script for prod simulation
+- SSL cert

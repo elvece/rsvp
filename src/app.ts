@@ -131,6 +131,6 @@ export function validate(validator: Ajv.ValidateFunction) {
 }
 
 // catch all error handling
-app.use((err, _, res) => {
+app.use(function (err, _, res) {
   res.status(500).json(err)
 })
