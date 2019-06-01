@@ -1,14 +1,10 @@
 import { TextField, Paper, Button, RadioGroup, FormControlLabel, Radio, FormLabel, FormControl } from "@material-ui/core"
 import React from 'react'
 import { withFormik } from 'formik'
-import { WebService } from 'app/services/WebService'
+import { webService } from 'app/services/WebService'
 import './Register.css'
 import * as Yup from 'yup'
 import { Prompt } from 'react-router-dom'
-
-const webService = process.env.NODE_ENV === 'development' ? 
-                  new WebService('http://localhost:3333') :
-                  new WebService()
 
 const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, touched, errors, dirty }) => (
   <React.Fragment>

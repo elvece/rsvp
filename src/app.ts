@@ -73,17 +73,17 @@ app.post('/rsvp/register', validate(ajv.compile(register)), async function (req,
 })
 
 app.get('/rsvp/all', async function (req, res, next) {
-  if (!req.session.user) {
-    res.status(401).json('Action requires authentication.')
-  } else {
+  // if (!req.session.user) {
+  //   res.status(401).json('Action requires authentication.')
+  // } else {
     try {
       const all = await getManager().find(Rsvp)
       res.status(200).json(all)
     } catch (e) {
       next(e)
     }
-    next()
-  }
+    // next()
+  // }
 })
 
 app.post('/admin/register', validate(ajv.compile(login)), async function (req, res, next) {
