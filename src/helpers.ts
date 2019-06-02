@@ -39,6 +39,7 @@ export function pgConfig() {
   }
 }
 
+// postgres://:@localhost/rsvp
 export function getStoreConnString() {
   const config = pgConfig()
   return process.env.NODE_ENV === 'development' ? 'postgres://' + config.username + ':' + config.password + '@' + config.host + '/' + config.database : process.env.DATABASE_URL

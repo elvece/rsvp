@@ -20,9 +20,7 @@ export class WebService {
   }
 }
 
-export const webService = process.env.NODE_ENV === 'development' ?
-  new WebService('http://localhost:3333') :
-  new WebService()
+export const webService = new WebService()
 
 interface CreateRsvpRequest {
   email: string

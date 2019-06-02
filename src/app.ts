@@ -52,7 +52,7 @@ app.use(session({
 }))
 
 if (process.env.NODE_ENV === 'production') {
-app.use(express.static(path.join(__dirname, '../client/build')))
+  app.use(express.static(path.join(__dirname, '../client/build')))
 }
 
 app.post('/rsvp/register', validate(ajv.compile(register)), async function (req, res, next) {
@@ -82,7 +82,7 @@ app.get('/rsvp/all', async function (_, res, next) {
     } catch (e) {
       next(e)
     }
-    next()
+    // next()
   // }
 })
 
@@ -108,6 +108,10 @@ app.post('/admin/login', async function (req, res, next) {
   req.session.user = user.id
   res.status(200).json('Successfully logged in.')
   next()
+})
+
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
 })
 
 export default app
