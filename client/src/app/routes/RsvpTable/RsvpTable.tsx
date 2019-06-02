@@ -11,43 +11,42 @@ class RsvpTable extends Component {
 
   async componentDidMount () {
     const res = await webService.getRsvps()
-    this.setState({ responses: res.data, loading: false })
+    const sorted = res.data.sort((a, b) => b.reply - a.reply)
+    this.setState({ responses: sorted, loading: false })
   }
 
   render () {
     return (
         <div className="RsvpTable">
           <table className="RsvpTable-table">
-          <thead>
-            <tr className="RsvpTable-row-header">
-                <th colSpan={1}>
-                  name
-                </th>
-                <th colSpan={2}>
-                  reply
-                </th>
-                <th colSpan={1}>
-                  note
-                </th>
+          <thead className="RsvpTable-row-header">
+              <th colSpan={1}>
+                name
+              </th>
+              <th colSpan={2}>
+                reply
+              </th>
+              <th colSpan={1}>
+                note
+              </th>
+          </thead>
+          <tbody className="RsvpTable-body">
+            {this.state.responses.map(response => (
+              <tr key={response.id}>
+                <td colSpan={1}>
+                    {response.firstName} {response.lastName}
+                </td>
+                <td colSpan={1}>
+                    {response.reply ? 'yes' : 'no'}
+                </td>
+                <td colSpan={2}>
+                    {response.note}
+                </td>
               </tr>
-            </thead>
-            <tbody className="RsvpTable-body">
-              {this.state.responses.map(response => (
-                <tr key={response.id}>
-                  <td colSpan={1}>
-                      {response.firstName} {response.lastName}
-                  </td>
-                  <td colSpan={1}>
-                      {response.reply ? 'yes' : 'no'}
-                  </td>
-                  <td colSpan={2}>
-                      {response.note}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

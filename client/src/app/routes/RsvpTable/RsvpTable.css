@@ -18,7 +18,7 @@
 .RsvpTable-row-header {
   font-variant: small-caps;
   font-size: 3vh;
-  border-bottom: 1px solid gray;
+  border-bottom: 3px solid gray;
 }
 
 .RsvpTable th, td {
@@ -27,5 +27,9 @@
 }
 
 .RsvpTable tr:nth-child(even) {
-  background-color: #d6d1d18a;
+  background-color: #d6d1d1ec;
+}
+
+.RsvpTable tr:nth-child(odd) {
+  background-color: #ebe9e9e7;
 }
