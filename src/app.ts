@@ -72,7 +72,7 @@ app.post('/rsvp/register', validate(ajv.compile(register)), async function (req,
   next()
 })
 
-app.get('/rsvp/all', async function (req, res, next) {
+app.get('/rsvp/all', async function (_, res, next) {
   // if (!req.session.user) {
   //   res.status(401).json('Action requires authentication.')
   // } else {
