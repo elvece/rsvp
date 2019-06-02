@@ -82,7 +82,7 @@ app.get('/rsvp/all', async function (_, res, next) {
     } catch (e) {
       next(e)
     }
-    // next()
+    next()
   // }
 })
 
