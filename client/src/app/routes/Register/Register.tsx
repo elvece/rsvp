@@ -16,6 +16,7 @@ const Register = ({ values, handleChange, handleSubmit, status, isSubmitting, to
       <Paper className="register-box">
         <h1 className="register-header">welcome</h1>
         <h3 className="register-text">Please register for Nicole's bridal shower below. <br/> We hope to see you there to create a memorable surprise for her!</h3>
+        <h4>If you have any trouble with this website, please call or email Vicki at 610-420-5296 | vpace10@aol.com</h4>
         <form onSubmit={handleSubmit} noValidate>
           <TextField
             label="First Name"

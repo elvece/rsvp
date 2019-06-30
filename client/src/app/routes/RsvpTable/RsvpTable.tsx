@@ -23,6 +23,9 @@ class RsvpTable extends Component {
               <th colSpan={1}>
                 name
               </th>
+            <th colSpan={1}>
+              email
+              </th>
               <th colSpan={2}>
                 reply
               </th>
@@ -35,6 +38,9 @@ class RsvpTable extends Component {
               <tr key={response.id}>
                 <td colSpan={1}>
                     {response.firstName} {response.lastName}
+                </td>
+                <td colSpan={1}>
+                  {response.email}
                 </td>
                 <td colSpan={1}>
                     {response.reply ? 'yes' : 'no'}
