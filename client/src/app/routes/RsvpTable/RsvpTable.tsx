@@ -6,18 +6,29 @@ class RsvpTable extends Component {
 
   state = {
     responses: [],
+    attend: 0,
+    decline: 0,
     loading: true
   }
 
   async componentDidMount () {
     const res = await webService.getRsvps()
     const sorted = res.data.sort((a, b) => b.reply - a.reply)
-    this.setState({ responses: sorted, loading: false })
+    const attend: number = sorted.map(r => r.reply).reduce((a, b) => a + b, 0)
+    const decline = sorted.length - attend
+    this.setState({
+      responses: sorted,
+      attend,
+      decline,
+      loading: false
+    })
   }
 
   render () {
     return (
         <div className="RsvpTable">
+          <p>Attending: {this.state.attend}</p>
+          <p>Declined: {this.state.decline}</p>
           <table className="RsvpTable-table">
           <thead className="RsvpTable-row-header">
               <th colSpan={1}>
