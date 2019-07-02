@@ -27,6 +27,7 @@ class RsvpTable extends Component {
   render () {
     return (
         <div className="RsvpTable">
+          <p>Total: {this.state.responses.length}</p>
           <p>Attending: {this.state.attend}</p>
           <p>Declined: {this.state.decline}</p>
           <table className="RsvpTable-table">
