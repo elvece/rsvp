@@ -31,18 +31,18 @@ class RsvpTable extends Component {
           <p>Declined: {this.state.decline}</p>
           <table className="RsvpTable-table">
           <thead className="RsvpTable-row-header">
-              <th colSpan={1}>
-                name
-              </th>
+            <th colSpan={1}>
+              name
+            </th>
             <th colSpan={1}>
               email
-              </th>
-              <th colSpan={2}>
-                reply
-              </th>
-              <th colSpan={1}>
-                note
-              </th>
+            </th>
+            <th colSpan={2}>
+              reply
+            </th>
+            <th colSpan={1}>
+              note
+            </th>
           </thead>
           <tbody className="RsvpTable-body">
             {this.state.responses.map(response => (
